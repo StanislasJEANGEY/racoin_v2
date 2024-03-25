@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace App\Models;
 
 class Photo extends \Illuminate\Database\Eloquent\Model {
     protected $table = 'photo';
@@ -9,8 +9,6 @@ class Photo extends \Illuminate\Database\Eloquent\Model {
 
     public function annonce()
     {
-        return $this->belongsTo('model\Annonce', 'id_annonce');
+        return $this->belongsTo('App\Models\Annonce', 'id_annonce');
     }
 }
-
-?>

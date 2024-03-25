@@ -26,9 +26,9 @@
                         </div>
                         <div class="row">
                             <div class="item-img">
-                                <img src="{{ annonce.url_photo }}" alt=""/>
+                                <img src="{{ annonce.photo[0].url_photo }}" alt=""/>
 
-                                <p class="align-center">{{ annonce.nb_photo }} photo(s)</p>
+                                <p class="align-center">{{ annonce.photo | length }} photo(s)</p>
                             </div>
                             <div class="item-infos">
                                 <h5> {{ annonce.titre | raw }}</h5>

@@ -1,3 +1,2 @@
 <?php
-error_reporting(E_ALL ^ E_DEPRECATED);
-require '../index.php';
+(require_once __DIR__.'/../config/app.php')->run();
