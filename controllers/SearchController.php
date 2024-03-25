@@ -2,8 +2,8 @@
 
 namespace controllers;
 
-use models\Annonce;
-use models\Categorie;
+use model\Annonce;
+use model\Categorie;
 
 class SearchController {
 

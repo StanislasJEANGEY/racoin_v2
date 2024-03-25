@@ -2,11 +2,11 @@
 
 namespace controllers;
 use AllowDynamicProperties;
-use models\Annonce;
-use models\Annonceur;
-use models\Departement;
-use models\Photo;
-use models\Categorie;
+use model\Annonce;
+use model\Annonceur;
+use model\Departement;
+use model\Photo;
+use model\Categorie;
 
 #[AllowDynamicProperties] class ItemController {
     public function __construct(){

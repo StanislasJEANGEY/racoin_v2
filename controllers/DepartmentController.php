@@ -2,7 +2,7 @@
 
 namespace controllers;
 
-use models\Departement;
+use model\Departement;
 
 class DepartmentController {
 

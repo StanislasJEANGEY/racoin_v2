@@ -7,10 +7,10 @@ use controllers\IndexController;
 use controllers\CreateItemController;
 use db\connection;
 
-use models\Annonce;
-use models\Categorie;
-use models\Annonceur;
-use models\Departement;
+use model\Annonce;
+use model\Categorie;
+use model\Annonceur;
+use model\Departement;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;

@@ -2,10 +2,10 @@
 
 namespace controllers;
 
-use models\Categorie;
-use models\Annonce;
-use models\Photo;
-use models\Annonceur;
+use model\Categorie;
+use model\Annonce;
+use model\Photo;
+use model\Annonceur;
 
 class CategoryController {
 
@@ -15,7 +15,8 @@ class CategoryController {
         return Categorie::orderBy('nom_categorie')->get()->toArray();
     }
 
-    private function getAnnonceData($n = null) {
+    private function getAnnonceData($n = null): \Illuminate\Database\Eloquent\Collection|array
+    {
         $query = Annonce::with(['Annonceur', 'Photo'])
             ->orderBy('id_annonce','desc');
 

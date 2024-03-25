@@ -2,9 +2,9 @@
 
 namespace controllers;
 
-use models\Annonce;
-use models\Photo;
-use models\Annonceur;
+use model\Annonce;
+use model\Photo;
+use model\Annonceur;
 
 class IndexController
 {
@@ -12,7 +12,7 @@ class IndexController
 
     public function displayAllAnnonce($twig, $menu, $chemin, $cat): void
     {
-        $template = $twig->load("indexController.html.twig");
+        $template = $twig->load("index.html.twig");
         $menu     = array(
             array(
                 'href' => $chemin,

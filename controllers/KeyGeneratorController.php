@@ -2,7 +2,7 @@
 
 namespace controllers;
 
-use models\ApiKey;
+use model\ApiKey;
 
 class KeyGeneratorController {
 

@@ -2,9 +2,9 @@
 
 namespace controllers;
 
-use models\Annonce;
-use models\Annonceur;
-use models\Photo;
+use model\Annonce;
+use model\Annonceur;
+use model\Photo;
 
 class AdvertiserViewController {
     public function __construct(){

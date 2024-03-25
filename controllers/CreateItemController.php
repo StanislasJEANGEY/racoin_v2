@@ -2,8 +2,8 @@
 
 namespace controllers;
 
-use models\Annonce;
-use models\Annonceur;
+use model\Annonce;
+use model\Annonceur;
 
 class CreateItemController
 {
