@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers;
+namespace App\Controllers;
 use AllowDynamicProperties;
 use model\Annonce;
 use model\Annonceur;
