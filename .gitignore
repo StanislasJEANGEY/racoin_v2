@@ -19,3 +19,4 @@ config/db.ini
 
 
 node_modules
+cache
