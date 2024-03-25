@@ -1,28 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ponicorn
- * Date: 26/01/15
- * Time: 00:25
- */
 
-namespace controller;
-use model\Annonce;
-use model\Annonceur;
-use model\Photo;
+namespace controllers;
 
-class viewAnnonceur {
+use models\Annonce;
+use models\Annonceur;
+use models\Photo;
+
+class AdvertiserViewController {
     public function __construct(){
     }
-    function afficherAnnonceur($twig, $menu, $chemin, $n, $cat): void
-    {
-        $this->annonceur = annonceur::find($n);
-        if(!isset($this->annonceur)){
-            echo "404";
-            return;
-        }
-        $tmp = annonce::where('id_annonceur','=',$n)->get();
 
+    private function getAnnonceData($n): array
+    {
+        $tmp = Annonce::where('id_annonceur','=',$n)->get();
         $annonces = [];
         foreach ($tmp as $a) {
             $a->nb_photo = Photo::where('id_annonce', '=', $a->id_annonce)->count();
@@ -31,11 +21,23 @@ class viewAnnonceur {
                     ->where('id_annonce', '=', $a->id_annonce)
                     ->first()->url_photo;
             }else{
-                $a->url_photo = $chemin.'/img/noimg.png';
+                $a->url_photo = '/img/noimg.png';
             }
-
             $annonces[] = $a;
         }
+        return $annonces;
+    }
+
+    function afficherAnnonceur($twig, $menu, $chemin, $n, $cat): void
+    {
+        $this->annonceur = Annonceur::find($n);
+        if(!isset($this->annonceur)){
+            echo "404";
+            return;
+        }
+
+        $annonces = $this->getAnnonceData($n);
+
         $template = $twig->load("annonceur.html.twig");
         echo $template->render(array('nom' => $this->annonceur,
             "chemin" => $chemin,

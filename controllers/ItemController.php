@@ -1,14 +1,14 @@
 <?php
 
-namespace controller;
+namespace controllers;
 use AllowDynamicProperties;
-use model\Annonce;
-use model\Annonceur;
-use model\Departement;
-use model\Photo;
-use model\Categorie;
+use models\Annonce;
+use models\Annonceur;
+use models\Departement;
+use models\Photo;
+use models\Categorie;
 
-#[AllowDynamicProperties] class item {
+#[AllowDynamicProperties] class ItemController {
     public function __construct(){
     }
     function afficherItem($twig, $menu, $chemin, $n, $cat): void
@@ -25,14 +25,14 @@ use model\Categorie;
                 'text' => 'Acceuil'),
             array('href' => $chemin."/cat/".$n,
                 'text' => Categorie::find($this->annonce->id_categorie)?->nom_categorie),
-            array('href' => $chemin."/item/".$n,
+            array('href' => $chemin."/itemController/".$n,
             'text' => $this->annonce->titre)
         );
 
         $this->annonceur = Annonceur::find($this->annonce->id_annonceur);
         $this->departement = Departement::find($this->annonce->id_departement );
         $this->photo = Photo::where('id_annonce', '=', $n)->get();
-        $template = $twig->load("item.html.twig");
+        $template = $twig->load("itemController.html.twig");
         echo $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,

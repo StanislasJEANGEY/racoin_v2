@@ -1,16 +1,16 @@
 <?php
 require 'vendor/autoload.php';
 
-use controller\getCategorie;
-use controller\getDepartment;
-use controller\index;
-use controller\item;
+use controllers\CategoryController;
+use controllers\departmentController;
+use controllers\IndexController;
+use controllers\CreateItemController;
 use db\connection;
 
-use model\Annonce;
-use model\Categorie;
-use model\Annonceur;
-use model\Departement;
+use models\Annonce;
+use models\Categorie;
+use models\Annonceur;
+use models\Departement;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -62,91 +62,91 @@ if (!isset($_SESSION['token'])) {
 
 $menu = [
     [
-        'href' => './index.php',
+        'href' => './IndexController.php',
         'text' => 'Accueil'
     ]
 ];
 
 $chemin = dirname($_SERVER['SCRIPT_NAME']);
 
-$cat = new getCategorie();
-$dpt = new getDepartment();
+$cat = new CategoryController();
+$dpt = new departmentController();
 
 $app->get('/', function () use ($twig, $menu, $chemin, $cat) {
-    $index = new index();
+    $index = new IndexController();
     $index->displayAllAnnonce($twig, $menu, $chemin, $cat->getCategories());
 });
 
-$app->get('/item/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
+$app->get('/itemController/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n     = $arg['n'];
-    $item = new item();
+    $item = new CreateItemController();
     $item->afficherItem($twig, $menu, $chemin, $n, $cat->getCategories());
 });
 
 $app->get('/add', function () use ($twig, $app, $menu, $chemin, $cat, $dpt) {
-    $ajout = new controller\addItem();
+    $ajout = new controllers\CreateItemController();
     $ajout->addItemView($twig, $menu, $chemin, $cat->getCategories(), $dpt->getAllDepartments());
 });
 
 $app->post('/add', function ($request) use ($twig, $app, $menu, $chemin) {
     $allPostVars = $request->getParsedBody();
-    $ajout       = new controller\addItem();
+    $ajout       = new controllers\CreateItemController();
     $ajout->addNewItem($twig, $menu, $chemin, $allPostVars);
 });
 
-$app->get('/item/{id}/edit', function ($request, $response, $arg) use ($twig, $menu, $chemin) {
+$app->get('/itemController/{id}/edit', function ($request, $response, $arg) use ($twig, $menu, $chemin) {
     $id   = $arg['id'];
-    $item = new item();
+    $item = new CreateItemController();
     $item->modifyGet($twig, $menu, $chemin, $id);
 });
-$app->post('/item/{id}/edit', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin, $cat, $dpt) {
+$app->post('/itemController/{id}/edit', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin, $cat, $dpt) {
     $id          = $arg['id'];
     $allPostVars = $request->getParsedBody();
-    $item        = new item();
+    $item        = new CreateItemController();
     $item->modifyPost($twig, $menu, $chemin, $id, $allPostVars, $cat->getCategories(), $dpt->getAllDepartments());
 });
 
-$app->map(['GET, POST'], '/item/{id}/confirm', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin) {
+$app->map(['GET, POST'], '/itemController/{id}/confirm', function ($request, $response, $arg) use ($twig, $app, $menu, $chemin) {
     $id   = $arg['id'];
     $allPostVars = $request->getParsedBody();
-    $item        = new item();
+    $item        = new CreateItemController();
     $item->edit($twig, $menu, $chemin, $id, $allPostVars);
 });
 
 $app->get('/search', function () use ($twig, $menu, $chemin, $cat) {
-    $s = new controller\Search();
+    $s = new controllers\SearchController();
     $s->show($twig, $menu, $chemin, $cat->getCategories());
 });
 
 
 $app->post('/search', function ($request, $response) use ($app, $twig, $menu, $chemin, $cat) {
     $array = $request->getParsedBody();
-    $s     = new controller\Search();
+    $s     = new controllers\SearchController();
     $s->research($array, $twig, $menu, $chemin, $cat->getCategories());
 
 });
 
 $app->get('/annonceur/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n         = $arg['n'];
-    $annonceur = new controller\viewAnnonceur();
+    $annonceur = new controllers\AdvertiserViewController();
     $annonceur->afficherAnnonceur($twig, $menu, $chemin, $n, $cat->getCategories());
 });
 
 $app->get('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin) {
     $n    = $arg['n'];
-    $item = new controller\item();
+    $item = new controllers\CreateItemController();
     $item->supprimerItemGet($twig, $menu, $chemin, $n);
 });
 
 $app->post('/del/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n    = $arg['n'];
-    $item = new controller\item();
+    $item = new controllers\CreateItemController();
     $item->supprimerItemPost($twig, $menu, $chemin, $n, $cat->getCategories());
 });
 
 $app->get('/cat/{n}', function ($request, $response, $arg) use ($twig, $menu, $chemin, $cat) {
     $n = $arg['n'];
-    $categorie = new controller\getCategorie();
+    $categorie = new controllers\CategoryController();
     $categorie->displayCategorie($twig, $menu, $chemin, $cat->getCategories(), $n);
 });
 
@@ -247,14 +247,14 @@ $app->group('/api', function () use ($app, $twig, $menu, $chemin, $cat) {
     });
 
     $app->get('/key', function () use ($app, $twig, $menu, $chemin, $cat) {
-        $kg = new controller\KeyGenerator();
+        $kg = new controllers\KeyGeneratorController();
         $kg->show($twig, $menu, $chemin, $cat->getCategories());
     });
 
     $app->post('/key', function () use ($app, $twig, $menu, $chemin, $cat) {
         $nom = $_POST['nom'];
 
-        $kg = new controller\KeyGenerator();
+        $kg = new controllers\KeyGeneratorController();
         $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
     });
 });

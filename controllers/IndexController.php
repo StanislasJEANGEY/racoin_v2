@@ -1,18 +1,18 @@
 <?php
 
-namespace controller;
+namespace controllers;
 
-use model\Annonce;
-use model\Photo;
-use model\Annonceur;
+use models\Annonce;
+use models\Photo;
+use models\Annonceur;
 
-class index
+class IndexController
 {
     protected $annonce = array();
 
     public function displayAllAnnonce($twig, $menu, $chemin, $cat): void
     {
-        $template = $twig->load("index.html.twig");
+        $template = $twig->load("indexController.html.twig");
         $menu     = array(
             array(
                 'href' => $chemin,
