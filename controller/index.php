@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controllers;
+namespace controller;
 
 use model\Annonce;
 use model\Photo;
 use model\Annonceur;
 
-class IndexController
+class index
 {
     protected $annonce = array();
 
-    public function displayAllAnnonce($twig, $menu, $chemin, $cat): void
+    public function displayAllAnnonce($twig, $menu, $chemin, $cat)
     {
         $template = $twig->load("index.html.twig");
         $menu     = array(
@@ -29,7 +29,7 @@ class IndexController
         ));
     }
 
-    public function getAll($chemin): void
+    public function getAll($chemin)
     {
         $tmp     = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->take(12)->get();
         $annonce = [];
@@ -45,7 +45,7 @@ class IndexController
             $t->nom_annonceur = Annonceur::select("nom_annonceur")
                 ->where("id_annonceur", "=", $t->id_annonceur)
                 ->first()->nom_annonceur;
-            $annonce[] = $t;
+            array_push($annonce, $t);
         }
         $this->annonce = $annonce;
     }

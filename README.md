@@ -11,6 +11,7 @@ docker compose run --rm php composer install
 docker compose run --rm php php sql/initdb.php
 docker compose run node npm install
 docker compose run node npm run build
+
 ```
 
 ## Utilisation
